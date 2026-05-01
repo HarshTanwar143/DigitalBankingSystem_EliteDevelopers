@@ -1,0 +1,32 @@
+## .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+*.userosscache
+
+## Rider
+.idea/
+
+## NuGet
+packages/
+*.nupkg
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+
+## Logs
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## User secrets
+**/appsettings.Development.json
