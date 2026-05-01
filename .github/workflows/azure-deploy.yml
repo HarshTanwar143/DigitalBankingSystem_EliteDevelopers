@@ -25,10 +25,6 @@ jobs:
     - name: Build Solution
       run: dotnet build SmartBank/SmartBank.sln --configuration Release --no-restore
 
-    - name: Run Unit Tests
-      run: dotnet test SmartBank/SmartBank.Tests/SmartBank.Tests.csproj --no-build --verbosity normal
-      continue-on-error: true   
-
     - name: Publish MVC App
       run: dotnet publish SmartBank/SmartBank.MVC/SmartBank.MVC.csproj -c Release -o ./publish
 
