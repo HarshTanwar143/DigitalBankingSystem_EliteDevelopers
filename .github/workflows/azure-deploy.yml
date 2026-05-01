@@ -1,0 +1,39 @@
+name: Smart Bank CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Restore Packages
+      run: dotnet restore SmartBank/SmartBank.sln
+
+    - name: Build Solution
+      run: dotnet build SmartBank/SmartBank.sln --configuration Release --no-restore
+
+    - name: Run Unit Tests
+      run: dotnet test SmartBank/SmartBank.Tests/SmartBank.Tests.csproj --no-build --verbosity normal
+
+    - name: Publish MVC App
+      run: dotnet publish SmartBank/SmartBank.MVC/SmartBank.MVC.csproj -c Release -o ./publish
+
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: smartbank-prod-app
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish
